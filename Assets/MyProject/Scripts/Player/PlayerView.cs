@@ -10,14 +10,25 @@ public class PlayerView : MonoBehaviour
     public Animator animator;
     [HideInInspector]
     public Rigidbody2D rb2d;
+    [HideInInspector]
+    public CapsuleCollider2D capsule;
 
     public float jumpForce;
+    public int speed;
+    
+
+    public AudioSource audioSource;
+    public List<AudioClip> audioClips;
     
 
     private void Start()
     {
         animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
+        audioSource = GetComponent<AudioSource>();
+        capsule = GetComponent<CapsuleCollider2D>();
+
+
     }
 
     public void Initialize(PlayerController playerController)
@@ -27,16 +38,25 @@ public class PlayerView : MonoBehaviour
 
     private void Update()
     {
-        playerController.playerRun();
+        
         playerController.playerJump();
         playerController.PlayerCrouch();
+        playerController.PlayerAttack();
+        playerController.PlayerHurt();
     }
+
+    private void LateUpdate()
+    {
+        playerController.playerRun();
+    }
+   
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Interactable"))
         {
             playerController.PlayerPush(true);
+           
         }
      
     }
@@ -48,6 +68,5 @@ public class PlayerView : MonoBehaviour
             playerController.PlayerPush(false);
         }
     }
-
 
 }

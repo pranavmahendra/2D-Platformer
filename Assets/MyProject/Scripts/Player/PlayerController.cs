@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,8 +19,12 @@ public class PlayerController
     public PlayerView playerView { get; }
 
     public bool isJumping;
+    public bool isMoving;
     public bool isCrouching;
- 
+    public bool isAttacking;
+    public bool isHurt;
+
+
 
     //Player Run Logic
     public void playerRun()
@@ -35,15 +40,23 @@ public class PlayerController
         }
         else if (speed > 0)
         {
-            scale.x = Mathf.Abs(scale.x);
-            
+            scale.x = Mathf.Abs(scale.x);   
         }
-        playerView.transform.localScale = scale;
-        
-        
-        if(isCrouching == false)
+     
+        if(speed != 0)
         {
-             playerView.transform.Translate(Vector3.right * speed * 2 * Time.deltaTime);
+            isMoving = true;
+        }
+        else
+        {
+            isMoving = false;
+        }
+
+        playerView.transform.localScale = scale;
+ 
+        if (isCrouching == false & isAttacking == false)
+        {
+             playerView.transform.Translate(Vector3.right * speed * playerView.speed * Time.deltaTime);
         }
     }
 
@@ -51,15 +64,20 @@ public class PlayerController
     public void playerJump()
     {
  
-        if(Input.GetKey(KeyCode.Space) && isCrouching == false)
+        if(Input.GetKeyDown(KeyCode.Space) && isCrouching == false)
         {
             isJumping = true;
-            playerView.rb2d.AddForce(new Vector2(0f, playerView.jumpForce), ForceMode2D.Force);
-            playerView.transform.Translate(Vector3.up * 4f * Time.deltaTime);
+            playerView.rb2d.AddForce(new Vector2(0f, playerView.jumpForce), ForceMode2D.Impulse);
+            playerView.transform.Translate(Vector3.up * playerView.speed * Time.deltaTime);
+
+            //Playing audio logic
+            playerView.audioSource.clip = playerView.audioClips[1];
+            playerView.audioSource.Play();
         }
         else if (Input.GetKeyUp(KeyCode.Space))
         {
             isJumping = false;
+            playerView.audioSource.Stop();
         }
       
         playerView.animator.SetBool("Jump", isJumping);
@@ -86,7 +104,38 @@ public class PlayerController
     
     }
 
+    //Attack Logic
+    public void PlayerAttack()
+    {
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            isAttacking = true;
+      
+            //Playing audio logic
+            playerView.audioSource.clip = playerView.audioClips[2];
+            playerView.audioSource.Play();
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            isAttacking = false;
+
+            playerView.audioSource.Stop();
     
-    
+        }
+        playerView.animator.SetBool("Attack", isAttacking);
+    }
+
+    //Hurt Logic
+    public void PlayerHurt()
+    {
+        EnemyService.Instance.enemyController.enemyView.enemyAttack.isAttacking += enemyAtAttacking;
+
+        playerView.animator.SetBool("Hurt", isHurt);
+    }
+
+    private void enemyAtAttacking()
+    {
+        isHurt = true;
+    }
 }
 

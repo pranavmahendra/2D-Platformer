@@ -26,8 +26,8 @@ TagManager:
   - EnemyWeapon
   - BossWeakPoint
   - Bullet
-  - 
-  - 
+  - Triggers
+  - EnemyTrigger
   - 
   - 
   - 

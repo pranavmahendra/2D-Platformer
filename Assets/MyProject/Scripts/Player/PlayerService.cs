@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ public class PlayerService : Monosingleton<PlayerService>
 {
     public PlayerModel playerModel;
     public PlayerView playerPrefab;
+    public PlayerController playerController;
 
 
     void Start()
@@ -19,8 +21,10 @@ public class PlayerService : Monosingleton<PlayerService>
 
         PlayerController playerController = new PlayerController(playerModel, playerPrefab);
 
-        return playerController;
-        
-                
+        this.playerController = playerController;
+
+        return playerController;       
     }
+
+  
 }
