@@ -42,7 +42,7 @@ public class PlayerView : MonoBehaviour
         playerController.playerJump();
         playerController.PlayerCrouch();
         playerController.PlayerAttack();
-        playerController.PlayerHurt();
+        //playerController.PlayerHurt();
     }
 
     private void LateUpdate()
@@ -58,7 +58,7 @@ public class PlayerView : MonoBehaviour
             playerController.PlayerPush(true);
            
         }
-     
+
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -67,6 +67,27 @@ public class PlayerView : MonoBehaviour
         {
             playerController.PlayerPush(false);
         }
+
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyTriggerAttack"))
+        {
+
+            animator.SetBool("Hurt", true);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyTriggerAttack"))
+        {
+
+            animator.SetBool("Hurt", false);
+        }
+    }
+
+
 
 }

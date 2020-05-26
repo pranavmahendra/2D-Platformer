@@ -7,7 +7,9 @@ public class PlayerModel
     public PlayerModel(float Health)
     {
         health = Health;
+
     }
 
-    public float health { get; }
+    public float health { get; set; }
+
 }

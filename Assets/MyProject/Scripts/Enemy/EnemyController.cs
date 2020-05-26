@@ -15,6 +15,7 @@ public class EnemyController
 
     public EnemyModel EnemyModel { get; }
     public EnemyView enemyView { get; }
+    public float movementSpeed;
 
     private bool isWalking()
     {
@@ -32,6 +33,7 @@ public class EnemyController
     public void Movement()
     {
         float speed = enemyView.speed;
+
         enemyView.animator.SetBool("isWalking", isWalking());
 
         Vector3 scale = enemyView.transform.localScale;
@@ -47,9 +49,23 @@ public class EnemyController
         enemyView.transform.localScale = scale;
         enemyView.transform.Translate(Vector3.right * enemyView.speed * Time.deltaTime);
 
+        this.movementSpeed = speed;
     }
 
+    //Damage
+    public void EnemyTakeDam(int amount)
+    {
+        EnemyModel.Health -= amount;
+        if(EnemyModel.Health <= 0)
+        {
+            Debug.Log("Enemy has died");
+        }
+        else
+        {
+            Debug.Log("Enemy took damage of: " + amount);
+            Debug.Log("Updated Health of enemy: " + EnemyModel.Health);
+        }
+    }
 
-
-
+ 
 }

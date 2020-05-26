@@ -10,9 +10,15 @@ public class EnemyView : MonoBehaviour
     public Animator animator;
     public EnemyController enemyController;
 
-    
+    public GameObject projectile;
+
+
+    public Transform Tip;
+    //private float rayDistance = 100f;
+
+
     [SerializeField]
-    private EnemyState currentState;
+    public EnemyState currentState;
 
     [SerializeField]
     public EnemyIdleState EnemyIdleState;
@@ -21,6 +27,9 @@ public class EnemyView : MonoBehaviour
     [SerializeField]
     public EnemyAttack enemyAttack;
 
+    private float fireRate;
+    private float nextFire;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,23 +37,29 @@ public class EnemyView : MonoBehaviour
         animator = GetComponent<Animator>();
         speed = 1;
 
-       
+        fireRate = 2f;
+        nextFire = Time.time;
 
         ChangeState(EnemyIdleState);
-       
     }
 
     // Update is called once per frame
     void Update()
     {
+
         enemyController.Movement();
+
+        CheckToFire();
+
     }
 
+    //Initialize Enemy View
     public void Initialize(EnemyController enemyController)
     {
         this.enemyController = enemyController;
     }
 
+    // On Trigger
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Triggers"))
@@ -71,5 +86,18 @@ public class EnemyView : MonoBehaviour
         currentState = newState;
         currentState.onEnterState();
     }
+
+
+    //Fire
+    public void CheckToFire()
+    {
+        if(Time.time > nextFire)
+        {
+            Instantiate(projectile, Tip.transform.position, Quaternion.identity);
+            nextFire = Time.time + fireRate;
+        }
+    }
+
+
 
 }

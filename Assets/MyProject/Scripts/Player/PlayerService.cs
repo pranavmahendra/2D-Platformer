@@ -17,7 +17,7 @@ public class PlayerService : Monosingleton<PlayerService>
 
     public PlayerController CreatePlayer()
     {
-        PlayerModel playerModel = new PlayerModel(100);
+        PlayerModel playerModel = new PlayerModel(150);
 
         PlayerController playerController = new PlayerController(playerModel, playerPrefab);
 

@@ -94,7 +94,8 @@ public class PlayerController
         {
             isCrouching = false;
         }
-        playerView.animator.SetBool("Crouch",isCrouching);
+        playerView.animator.SetBool("Crouch", isCrouching);
+        
     }
 
     //Push Logic
@@ -128,14 +129,28 @@ public class PlayerController
     //Hurt Logic
     public void PlayerHurt()
     {
-        EnemyService.Instance.enemyController.enemyView.enemyAttack.isAttacking += enemyAtAttacking;
+        //EnemyService.Instance.enemyController.enemyView.enemyAttack.isAttacking += enemyAtAttacking;
 
         playerView.animator.SetBool("Hurt", isHurt);
+
+        
     }
 
-    private void enemyAtAttacking()
+    //Damage Logic
+    public void TakeDamage(int projectileDamage)
     {
-        isHurt = true;
+        PlayerModel.health = PlayerModel.health - projectileDamage;
+        if (PlayerModel.health <= 0)
+        {
+            playerView.gameObject.SetActive(false);
+            Debug.Log("Player has died.");
+        }
+        else
+        {
+            Debug.Log("Player took damage of:" + projectileDamage + ".");
+            Debug.Log("Updated health of player is " + PlayerModel.health + ".");
+        }
     }
+
 }
 

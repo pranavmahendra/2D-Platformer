@@ -2,12 +2,10 @@
 
 public class EnemyModel
 {
-   public EnemyModel(int Health, int damage)
+   public EnemyModel(int Health)
     {
         this.Health = Health;
-        this.Damage = damage;
     }
 
-    public int Health { get; }
-    public int Damage { get; }
+    public int Health { get; set; }
 }

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyStop : EnemyState
 {
+    private Transform PlayerPos;
+
     public override void onEnterState()
     {
         base.onEnterState();
@@ -17,11 +19,17 @@ public class EnemyStop : EnemyState
         enemyView.speed = 1;
     }
 
+    private void Update()
+    {
+        
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.GetComponent<PlayerView>() != null)
         {
+            
             enemyView.ChangeState(enemyView.enemyStop);
         }
     }
