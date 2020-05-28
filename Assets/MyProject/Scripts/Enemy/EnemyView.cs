@@ -51,6 +51,8 @@ public class EnemyView : MonoBehaviour
 
         CheckToFire();
 
+
+
     }
 
     //Initialize Enemy View
@@ -91,9 +93,9 @@ public class EnemyView : MonoBehaviour
     //Fire
     public void CheckToFire()
     {
-        if(Time.time > nextFire)
+        if (Time.time > nextFire)
         {
-            Instantiate(projectile, Tip.transform.position, Quaternion.identity);
+            Instantiate(projectile, Tip.transform.position, Tip.transform.rotation);
             nextFire = Time.time + fireRate;
         }
     }

@@ -10,7 +10,7 @@ public class EnemyStop : EnemyState
     {
         base.onEnterState();
         enemyView.speed = 0;
-        Debug.Log("Enemy has stopped!!!");
+        //Debug.Log("Enemy has stopped!!!");
     }
 
     public override void onExitState()
@@ -21,7 +21,7 @@ public class EnemyStop : EnemyState
 
     private void Update()
     {
-        
+        //enemyView.CheckToFire();
     }
 
 

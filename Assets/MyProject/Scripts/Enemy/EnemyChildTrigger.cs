@@ -4,16 +4,25 @@ using UnityEngine;
 
 public class EnemyChildTrigger : MonoBehaviour
 {
+    public EnemyView enemyView;
 
+    //Enemy hurt functions are mentioned here.
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.GetComponent<PlayerView>())
         {
-            EnemyService.Instance.enemyController.enemyView.animator.SetBool("isHurt", true);
+            enemyView.animator.SetBool("isHurt", true);
+        }
 
+        else if (collision.gameObject.GetComponent<BulletView>())
+        {
             //Take damage function of enemy.
-             EnemyService.Instance.enemyController.EnemyTakeDam(30);
-          
+            enemyView.animator.SetTrigger("isShot");
+            enemyView.speed = 0;
+            //VFX for bullet explosion.
+            VFXService.Instance.CreateBulletExplosion(enemyView.transform.position, enemyView.transform.rotation);
+            enemyView.enemyController.EnemyTakeDam(BulletService.Instance.bulletController.BulletModel.Damage);
+            StartCoroutine(ResetValues());
         }
     }
 
@@ -21,8 +30,14 @@ public class EnemyChildTrigger : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerView>())
         {
-            EnemyService.Instance.enemyController.enemyView.animator.SetBool("isHurt", false);
+            enemyView.animator.SetBool("isHurt", false);
         }
     }
 
+    private IEnumerator ResetValues()
+    {
+        yield return new WaitForSeconds(0.5f); //invul time
+        enemyView.speed = 1;
+        enemyView.animator.SetTrigger("isShot"); //play hit trigger
+    }
 }

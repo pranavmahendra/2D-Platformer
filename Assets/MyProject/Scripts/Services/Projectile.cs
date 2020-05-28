@@ -12,21 +12,13 @@ public class Projectile : MonoBehaviour
 
     private void Start()
     {
-        DestroyProjectile();
+        
         rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.right * speed;
+
+        DestroyProjectile();
     }
 
-    private void Update()
-    {
-        if (EnemyService.Instance.enemyController.movementSpeed < 0)
-        {
-            transform.Translate(Vector2.left * speed * Time.deltaTime);
-        }
-        else if (EnemyService.Instance.enemyController.movementSpeed > 0)
-        {
-            transform.Translate(Vector2.right * speed * Time.deltaTime);
-        } 
-    }
 
     void DestroyProjectile()
     {

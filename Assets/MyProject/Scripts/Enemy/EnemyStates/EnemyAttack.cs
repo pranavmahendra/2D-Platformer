@@ -21,7 +21,7 @@ public class EnemyAttack : EnemyState
         enemyView.animator.SetBool("isAttacking", enemyAttack);
 
  
-        Debug.Log("Enemy has started attacking");
+        //Debug.Log("Enemy has started attacking");
 
     }
 
@@ -31,12 +31,13 @@ public class EnemyAttack : EnemyState
         base.onExitState();
         enemyAttack = false;
         enemyView.animator.SetBool("isAttacking", enemyAttack);
-        Debug.Log("Enemy has stopped attacking");
+        //Debug.Log("Enemy has stopped attacking");
     }
 
     private void Update()
     {
         //enemyView.transform.LookAt(PlayerPos.position);
+        //enemyView.CheckToFire();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

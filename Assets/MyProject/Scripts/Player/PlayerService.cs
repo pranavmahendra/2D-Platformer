@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerService : Monosingleton<PlayerService>
 {
     public PlayerModel playerModel;
@@ -10,10 +11,15 @@ public class PlayerService : Monosingleton<PlayerService>
     public PlayerController playerController;
 
 
+ 
     void Start()
     {
         CreatePlayer();
+
+        BulletService.Instance.InitializePlayerView(this.playerController.playerView);
+        
     }
+
 
     public PlayerController CreatePlayer()
     {
@@ -26,5 +32,4 @@ public class PlayerService : Monosingleton<PlayerService>
         return playerController;       
     }
 
-  
 }

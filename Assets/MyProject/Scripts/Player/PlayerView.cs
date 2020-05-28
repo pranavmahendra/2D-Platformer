@@ -15,7 +15,9 @@ public class PlayerView : MonoBehaviour
 
     public float jumpForce;
     public int speed;
-    
+
+    public Transform tipPosition;
+    public GameObject projectile;
 
     public AudioSource audioSource;
     public List<AudioClip> audioClips;
@@ -87,7 +89,5 @@ public class PlayerView : MonoBehaviour
             animator.SetBool("Hurt", false);
         }
     }
-
-
 
 }

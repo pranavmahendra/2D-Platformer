@@ -15,8 +15,11 @@ public class EnemyController
 
     public EnemyModel EnemyModel { get; }
     public EnemyView enemyView { get; }
-    public float movementSpeed;
 
+
+    private bool m_FacingRight = true;
+   
+    //is walking true or false
     private bool isWalking()
     {
         if(enemyView.speed == 0)
@@ -29,6 +32,19 @@ public class EnemyController
         }
     }
 
+    //Is Dead true or false
+    private bool isDead()
+    {
+        if (EnemyModel.Health <= 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     //Movement
     public void Movement()
     {
@@ -36,20 +52,32 @@ public class EnemyController
 
         enemyView.animator.SetBool("isWalking", isWalking());
 
-        Vector3 scale = enemyView.transform.localScale;
-
-        if (speed < 0)
+    
+        if (speed > 0 && !m_FacingRight)
         {
-           scale.x = -1f * Mathf.Abs(scale.x);
+            Flip();
         }
-        else if (speed > 0)
+        else if (speed < 0 && m_FacingRight)
         {
-            scale.x = Mathf.Abs(scale.x);
+            Flip();
         }
-        enemyView.transform.localScale = scale;
-        enemyView.transform.Translate(Vector3.right * enemyView.speed * Time.deltaTime);
 
-        this.movementSpeed = speed;
+        void Flip()
+        {
+            m_FacingRight = !m_FacingRight;
+
+            enemyView.transform.Rotate(0f, 180f, 0f);
+        }
+
+        if (!m_FacingRight)
+        {
+            enemyView.transform.Translate(speed * -1f * Time.deltaTime, 0f, 0f);
+        }
+        else
+        {
+            enemyView.transform.Translate(speed * 1f * Time.deltaTime, 0f, 0f);
+        }
+
     }
 
     //Damage
@@ -58,12 +86,22 @@ public class EnemyController
         EnemyModel.Health -= amount;
         if(EnemyModel.Health <= 0)
         {
-            Debug.Log("Enemy has died");
+            DestoryEnemey();
+            enemyView.animator.SetBool("isDead", isDead());
         }
         else
         {
+            enemyView.animator.SetBool("isDead", isDead());
             Debug.Log("Enemy took damage of: " + amount);
             Debug.Log("Updated Health of enemy: " + EnemyModel.Health);
+        }
+    }
+
+    public void DestoryEnemey()
+    {
+        if(EnemyModel.Health <= 0)
+        {
+            EnemyView.Destroy(enemyView.gameObject, 0.5f);
         }
     }
 

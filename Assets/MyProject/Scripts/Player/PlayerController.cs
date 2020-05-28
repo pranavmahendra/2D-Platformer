@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PlayerController 
 {
     public PlayerController(PlayerModel playerModel, PlayerView playerPrefab)
@@ -24,39 +25,50 @@ public class PlayerController
     public bool isAttacking;
     public bool isHurt;
 
+    private bool m_FacingRight = true;
 
+    
 
     //Player Run Logic
     public void playerRun()
     {
         float speed = Input.GetAxisRaw("Horizontal");
-  
+        
         playerView.animator.SetFloat("Speed", Mathf.Abs(speed));
-        Vector3 scale = playerView.transform.localScale;
 
-        if(speed < 0)
+        //Flip the character.
+        //Speed more than 0 and facing left.
+        if(speed > 0 && !m_FacingRight)
         {
-            scale.x = -1f * Mathf.Abs(scale.x);
+            
+            Flip();
         }
-        else if (speed > 0)
+        else if (speed < 0 && m_FacingRight)
         {
-            scale.x = Mathf.Abs(scale.x);   
-        }
-     
-        if(speed != 0)
-        {
-            isMoving = true;
-        }
-        else
-        {
-            isMoving = false;
+            
+            Flip();
         }
 
-        playerView.transform.localScale = scale;
- 
-        if (isCrouching == false & isAttacking == false)
+        
+        void Flip()
         {
-             playerView.transform.Translate(Vector3.right * speed * playerView.speed * Time.deltaTime);
+            m_FacingRight = !m_FacingRight;
+
+            playerView.transform.Rotate(0f, 180f, 0f);
+        }
+
+        if (isCrouching == false)
+        {
+            if(!m_FacingRight)
+            {
+                playerView.transform.Translate(speed * playerView.speed * -1f * Time.deltaTime, 0f, 0f);
+            }
+            else
+            {
+                //Default
+                playerView.transform.Translate(speed * playerView.speed * 1f * Time.deltaTime, 0f, 0f);
+            }
+            
         }
     }
 
@@ -111,12 +123,14 @@ public class PlayerController
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             isAttacking = true;
-      
+
+            EllenFire();
+             
             //Playing audio logic
             playerView.audioSource.clip = playerView.audioClips[2];
             playerView.audioSource.Play();
         }
-        if (Input.GetKeyUp(KeyCode.Mouse0))
+        else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             isAttacking = false;
 
@@ -133,7 +147,6 @@ public class PlayerController
 
         playerView.animator.SetBool("Hurt", isHurt);
 
-        
     }
 
     //Damage Logic
@@ -150,6 +163,13 @@ public class PlayerController
             Debug.Log("Player took damage of:" + projectileDamage + ".");
             Debug.Log("Updated health of player is " + PlayerModel.health + ".");
         }
+    }
+
+    //Ellen Creating Bullet Logic
+    public void EllenFire()
+    {
+        BulletService.Instance.CreateEllenBullet().setPosition(playerView.tipPosition.position, playerView.tipPosition.rotation);
+      
     }
 
 }
