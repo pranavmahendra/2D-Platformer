@@ -12,7 +12,6 @@ public class EnemyView : MonoBehaviour
 
     public GameObject projectile;
 
-
     public Transform Tip;
     //private float rayDistance = 100f;
 
@@ -34,7 +33,9 @@ public class EnemyView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+     
         animator = GetComponent<Animator>();
+
         speed = 1;
 
         fireRate = 2f;

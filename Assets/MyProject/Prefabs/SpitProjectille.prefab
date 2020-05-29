@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1856617450109730919}
   - component: {fileID: 1978537470815364665}
   - component: {fileID: 1949187069483170583}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: SpitGoop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4767,9 +4767,9 @@ GameObject:
   - component: {fileID: 1835404151467436713}
   - component: {fileID: 1961379969123443629}
   - component: {fileID: -1945963297829228648}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: SpitProjectille
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -34,7 +34,8 @@ public class Projectile : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<PlayerView>())
         {
-            collision.GetComponent<PlayerView>().playerController.TakeDamage(damage);
+            //collision.GetComponent<PlayerView>().playerController.TakeDamage(damage);
+        
             DestroyOnCollision();
         }
     }

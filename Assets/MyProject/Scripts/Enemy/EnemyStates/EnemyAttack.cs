@@ -20,7 +20,11 @@ public class EnemyAttack : EnemyState
 
         enemyView.animator.SetBool("isAttacking", enemyAttack);
 
- 
+        //PLay Attack Audio
+        EnemyService.Instance.audioService.audioSources[0].clip = EnemyService.Instance.audioService.enemyAudioClips[2];
+        EnemyService.Instance.audioService.audioSources[0].Play();
+        EnemyService.Instance.audioService.audioSources[0].loop = false;
+
         //Debug.Log("Enemy has started attacking");
 
     }
@@ -32,6 +36,8 @@ public class EnemyAttack : EnemyState
         enemyAttack = false;
         enemyView.animator.SetBool("isAttacking", enemyAttack);
         //Debug.Log("Enemy has stopped attacking");
+
+        EnemyService.Instance.PlayAudio();
     }
 
     private void Update()

@@ -12,13 +12,21 @@ public class EnemyChildTrigger : MonoBehaviour
         if(collision.gameObject.GetComponent<PlayerView>())
         {
             enemyView.animator.SetBool("isHurt", true);
+
         }
 
         else if (collision.gameObject.GetComponent<BulletView>())
         {
             //Take damage function of enemy.
             enemyView.animator.SetTrigger("isShot");
+
+            //Play audio when bullet hits enemy.
+            EnemyService.Instance.audioService.audioSources[0].clip = EnemyService.Instance.audioService.enemyAudioClips[4];
+            EnemyService.Instance.audioService.audioSources[0].Play();
+            EnemyService.Instance.audioService.audioSources[0].loop = false;
+
             enemyView.speed = 0;
+
             //VFX for bullet explosion.
             VFXService.Instance.CreateBulletExplosion(enemyView.transform.position, enemyView.transform.rotation);
             enemyView.enemyController.EnemyTakeDam(BulletService.Instance.bulletController.BulletModel.Damage);

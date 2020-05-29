@@ -21,6 +21,11 @@ public class PlayerView : MonoBehaviour
 
     public AudioSource audioSource;
     public List<AudioClip> audioClips;
+
+    public ParticleSystem dustPuff;
+
+    [HideInInspector]
+    public bool isGrounded;
     
 
     private void Start()
@@ -30,7 +35,7 @@ public class PlayerView : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         capsule = GetComponent<CapsuleCollider2D>();
 
-
+        
     }
 
     public void Initialize(PlayerController playerController)
@@ -58,7 +63,19 @@ public class PlayerView : MonoBehaviour
         if(collision.gameObject.layer == LayerMask.NameToLayer("Interactable"))
         {
             playerController.PlayerPush(true);
-           
+        }
+        else if(collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
+        {
+            isGrounded = true;
+
+            dustPuff.Play();
+
+            playerController.isJumping = false;
+
+            //Play landing audio
+            PlayerService.Instance.audioService.audioSources[1].clip = PlayerService.Instance.audioService.playerAudioClips[4];
+            PlayerService.Instance.audioService.audioSources[1].Play();
+            PlayerService.Instance.audioService.audioSources[1].loop = false;
         }
 
     }
@@ -70,14 +87,27 @@ public class PlayerView : MonoBehaviour
             playerController.PlayerPush(false);
         }
 
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
+        {
+            isGrounded = false;
+            
+            dustPuff.Stop();
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyTriggerAttack"))
         {
-
             animator.SetBool("Hurt", true);
+            playerController.isHurt = true;
+        }
+
+        else if(collision.gameObject.layer == LayerMask.NameToLayer("BossBullet"))
+        {
+            playerController.TakeDamage(EnemyService.Instance.enemyController.EnemyModel.Damage);
+            StartCoroutine(SetHurtFalse());
         }
     }
 
@@ -85,9 +115,16 @@ public class PlayerView : MonoBehaviour
     {
         if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyTriggerAttack"))
         {
-
+            playerController.isHurt = false;
             animator.SetBool("Hurt", false);
         }
     }
 
+
+    IEnumerator SetHurtFalse()
+    {
+        playerController.isHurt = false;
+        yield return new WaitForSeconds(0.2f);
+        animator.SetBool("Hurt", false);
+    }
 }

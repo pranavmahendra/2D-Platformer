@@ -15,7 +15,7 @@ public class KeyView : MonoBehaviour
 
     public ParticleSystem PickupEffect;
 
-    //public event Action KeyPickup;
+  
 
     private void Start()
     {
@@ -39,21 +39,10 @@ public class KeyView : MonoBehaviour
         {
             audioSource.Play();
             hasPlayed = true;
-
-           
-            Instantiate(PickupEffect, this.transform.position, this.transform.rotation);
             PickupEffect.Play();
-            //KeyPickup?.Invoke();
-            //this.gameObject.SetActive(false);
+            Destroy(gameObject, 0.3f);
 
         }
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.GetComponent<PlayerView>() && hasPlayed == true)
-        {
-            this.gameObject.SetActive(false);
-        }
-    }
 }

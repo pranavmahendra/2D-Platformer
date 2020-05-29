@@ -10,6 +10,11 @@ public class EnemyStop : EnemyState
     {
         base.onEnterState();
         enemyView.speed = 0;
+
+
+        EnemyService.Instance.audioService.audioSources[0].clip = EnemyService.Instance.audioService.enemyAudioClips[1];
+        EnemyService.Instance.audioService.audioSources[0].Play();
+        EnemyService.Instance.audioService.audioSources[0].loop = false;
         //Debug.Log("Enemy has stopped!!!");
     }
 
@@ -17,6 +22,8 @@ public class EnemyStop : EnemyState
     {
         base.onExitState();
         enemyView.speed = 1;
+
+        EnemyService.Instance.PlayAudio();
     }
 
     private void Update()

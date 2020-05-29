@@ -15,7 +15,7 @@ public class PlayerController
 
         playerPrefab.Initialize(this);
     }
-
+    
     public PlayerModel PlayerModel { get; }
     public PlayerView playerView { get; }
 
@@ -27,29 +27,35 @@ public class PlayerController
 
     private bool m_FacingRight = true;
 
-    
+    public float speed;
 
     //Player Run Logic
     public void playerRun()
     {
-        float speed = Input.GetAxisRaw("Horizontal");
-        
+
+        speed = Input.GetAxisRaw("Horizontal");
+
         playerView.animator.SetFloat("Speed", Mathf.Abs(speed));
 
+        PlayerService.Instance.invokeRun();
         //Flip the character.
         //Speed more than 0 and facing left.
-        if(speed > 0 && !m_FacingRight)
+        if (speed > 0 && !m_FacingRight)
         {
-            
+            isMoving = true;
             Flip();
         }
         else if (speed < 0 && m_FacingRight)
         {
-            
+            isMoving = true;
             Flip();
         }
+        else
+        {
+            isMoving = false;
+        }
 
-        
+
         void Flip()
         {
             m_FacingRight = !m_FacingRight;
@@ -57,7 +63,7 @@ public class PlayerController
             playerView.transform.Rotate(0f, 180f, 0f);
         }
 
-        if (isCrouching == false)
+        if (isCrouching == false & isHurt == false)
         {
             if(!m_FacingRight)
             {
@@ -79,19 +85,19 @@ public class PlayerController
         if(Input.GetKeyDown(KeyCode.Space) && isCrouching == false)
         {
             isJumping = true;
+  
             playerView.rb2d.AddForce(new Vector2(0f, playerView.jumpForce), ForceMode2D.Impulse);
+
             playerView.transform.Translate(Vector3.up * playerView.speed * Time.deltaTime);
 
-            //Playing audio logic
-            playerView.audioSource.clip = playerView.audioClips[1];
-            playerView.audioSource.Play();
+            ////Playing audio logic
+            //Play landing audio
+            PlayerService.Instance.audioService.audioSources[1].clip = PlayerService.Instance.audioService.playerAudioClips[2];
+            PlayerService.Instance.audioService.audioSources[1].Play();
+           
+            PlayerService.Instance.audioService.audioSources[1].loop = false;
         }
-        else if (Input.GetKeyUp(KeyCode.Space))
-        {
-            isJumping = false;
-            playerView.audioSource.Stop();
-        }
-      
+     
         playerView.animator.SetBool("Jump", isJumping);
     }
 
@@ -125,17 +131,19 @@ public class PlayerController
             isAttacking = true;
 
             EllenFire();
-             
+
             //Playing audio logic
-            playerView.audioSource.clip = playerView.audioClips[2];
-            playerView.audioSource.Play();
+            PlayerService.Instance.invokeAttack();
+            //PlayerService.Instance.audioService.audioSources[1].clip = PlayerService.Instance.audioService.playerAudioClips[1];
+            //PlayerService.Instance.audioService.audioSources[1].Play();
+            //PlayerService.Instance.audioService.audioSources[1].loop = false;
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0))
         {
             isAttacking = false;
 
             playerView.audioSource.Stop();
-    
+
         }
         playerView.animator.SetBool("Attack", isAttacking);
     }
@@ -144,9 +152,10 @@ public class PlayerController
     public void PlayerHurt()
     {
         //EnemyService.Instance.enemyController.enemyView.enemyAttack.isAttacking += enemyAtAttacking;
-
-        playerView.animator.SetBool("Hurt", isHurt);
-
+        PlayerService.Instance.invokeHurt();
+        //isHurt = true;
+        playerView.animator.SetBool("Hurt", true);
+        
     }
 
     //Damage Logic
@@ -160,6 +169,7 @@ public class PlayerController
         }
         else
         {
+            PlayerHurt();
             Debug.Log("Player took damage of:" + projectileDamage + ".");
             Debug.Log("Updated health of player is " + PlayerModel.health + ".");
         }

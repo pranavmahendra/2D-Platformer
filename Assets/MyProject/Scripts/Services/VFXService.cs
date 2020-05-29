@@ -23,4 +23,7 @@ public class VFXService : Monosingleton<VFXService>
         Instantiate(particles[2], spawnPosition, rotation);
         particles[2].Play();
     }
+
+
+
 }
