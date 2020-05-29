@@ -15,7 +15,7 @@ public class PlayerService : Monosingleton<PlayerService>
     public event Action EllenRun;
     public event Action EllenAttack;
     public event Action EllenHurt;
-    public event Action EllenJump;
+    //public event Action EllenJump;
 
     void Start()
     {
@@ -37,11 +37,13 @@ public class PlayerService : Monosingleton<PlayerService>
 
     public PlayerController CreatePlayer()
     {
-        PlayerModel playerModel = new PlayerModel(150);
+        PlayerModel playerModel = new PlayerModel(100);
 
         PlayerController playerController = new PlayerController(playerModel, playerPrefab);
 
         this.playerController = playerController;
+
+        HealthService.Instance.followPlayer();
 
         return playerController;       
     }

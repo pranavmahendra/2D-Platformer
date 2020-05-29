@@ -102,6 +102,7 @@ public class EnemyController
     {
         if(EnemyModel.Health <= 0)
         {
+            Debug.Log("BAMM!!! Enemy Died");
             EnemyService.Instance.audioService.audioSources[0].clip = EnemyService.Instance.audioService.enemyAudioClips[3];
             EnemyService.Instance.audioService.audioSources[0].Play();
             EnemyService.Instance.audioService.audioSources[0].loop = false;

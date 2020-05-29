@@ -100,14 +100,14 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 40
+  m_Mass: 50
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_AngularDrag: 0
+  m_GravityScale: 1.2
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &2883865644819000165
 BoxCollider2D:
@@ -169,7 +169,7 @@ MonoBehaviour:
   animator: {fileID: 0}
   rb2d: {fileID: 0}
   capsule: {fileID: 0}
-  jumpForce: 160
+  jumpForce: 180
   speed: 3
   tipPosition: {fileID: 2636404599371736633}
   projectile: {fileID: 1567967645905842, guid: 1ff71bd15b48c43e4a8842117f43a3b8, type: 3}

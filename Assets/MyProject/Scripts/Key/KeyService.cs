@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class KeyService : Monosingleton<KeyService>
 {
@@ -8,26 +9,20 @@ public class KeyService : Monosingleton<KeyService>
     private KeyModel keyModel;
     public KeyController keyController;
 
+    //Action on key collection.
+    public event Action KeyCollected;
+
     private void Start()
     {
-        //CreateNewKey();
         
-            
+   
+        AchievementSystem.Instance.InitializeKey(KeyView);
+
+
     }
 
-    private void Update()
+    public void KeyActionInvoke()
     {
-        
+        KeyCollected?.Invoke();
     }
-
-    //public KeyController CreateNewKey()
-    //{
-    //    keyModel = new KeyModel(20);
-
-    //    KeyController keyController = new KeyController(keyModel, KeyView);
-
-    //    this.keyController = keyController;
-
-    //    return keyController;
-    //}
 }

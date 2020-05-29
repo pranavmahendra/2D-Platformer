@@ -18,6 +18,7 @@ public class PlayerController
     
     public PlayerModel PlayerModel { get; }
     public PlayerView playerView { get; }
+    
 
     public bool isJumping;
     public bool isMoving;

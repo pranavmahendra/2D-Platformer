@@ -20,6 +20,8 @@ public class KeyView : MonoBehaviour
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+
+        
     }
 
     private void Update()
@@ -37,6 +39,8 @@ public class KeyView : MonoBehaviour
     {
         if(collision.gameObject.GetComponent<PlayerView>() && hasPlayed == false)
         {
+            KeyService.Instance.KeyActionInvoke();
+
             audioSource.Play();
             hasPlayed = true;
             PickupEffect.Play();

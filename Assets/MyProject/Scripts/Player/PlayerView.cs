@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerView : MonoBehaviour
 {
     public PlayerController playerController;
-
+    
     [HideInInspector]
     public Animator animator;
     [HideInInspector]
@@ -15,6 +15,8 @@ public class PlayerView : MonoBehaviour
 
     public float jumpForce;
     public int speed;
+
+    private float health;
 
     public Transform tipPosition;
     public GameObject projectile;
@@ -34,8 +36,13 @@ public class PlayerView : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         capsule = GetComponent<CapsuleCollider2D>();
+       
+    }
 
-        
+    public float getHealh()
+    {
+        health = playerController.PlayerModel.health;
+        return health;
     }
 
     public void Initialize(PlayerController playerController)
@@ -107,7 +114,11 @@ public class PlayerView : MonoBehaviour
         else if(collision.gameObject.layer == LayerMask.NameToLayer("BossBullet"))
         {
             playerController.TakeDamage(EnemyService.Instance.enemyController.EnemyModel.Damage);
-            StartCoroutine(SetHurtFalse());
+            if(playerController.PlayerModel.health > 0)
+            {
+                StartCoroutine(SetHurtFalse());
+            }
+           
         }
     }
 
