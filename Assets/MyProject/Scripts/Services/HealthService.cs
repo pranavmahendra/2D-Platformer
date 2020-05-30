@@ -62,9 +62,6 @@ public class HealthService : Monosingleton<HealthService>
         }
     }
 
-
-
-
     public void followPlayer()
     {
         playerView = PlayerService.Instance.playerController.playerView;
