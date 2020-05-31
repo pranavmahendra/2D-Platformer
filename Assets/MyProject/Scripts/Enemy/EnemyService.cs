@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+
 
 public class EnemyService : Monosingleton<EnemyService>
 {
@@ -35,7 +35,7 @@ public class EnemyService : Monosingleton<EnemyService>
 
     public EnemyController CreateEnemy()
     {
-        enemyModel = new EnemyModel(100,20);
+        enemyModel = new EnemyModel(100,10);
         EnemyController enemyController = new EnemyController(enemyModel, enemyView);
 
         //Add enemy to list

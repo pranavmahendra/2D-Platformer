@@ -159,28 +159,62 @@ public class PlayerController
         
     }
 
+
     //Damage Logic
     public void TakeDamage(int projectileDamage)
     {
+        //Play sound.
+        PlayerService.Instance.audioService.audioSources[1].clip = PlayerService.Instance.audioService.playerAudioClips[5];
+        PlayerService.Instance.audioService.audioSources[1].Play();
+
         PlayerModel.health = PlayerModel.health - projectileDamage;
         if (PlayerModel.health <= 0)
         {
             playerView.gameObject.SetActive(false);
+            HealthService.Instance.HealthAnims[3].SetBool("health", true);
+            //HealthService.Instance.PlayerHIcons[3].enabled = false;
             Debug.Log("Player has died.");
         }
         else
         {
             PlayerHurt();
+ 
             Debug.Log("Player took damage of:" + projectileDamage + ".");
             Debug.Log("Updated health of player is " + PlayerModel.health + ".");
         }
     }
 
+
     //Ellen Creating Bullet Logic
     public void EllenFire()
     {
         BulletService.Instance.CreateEllenBullet().setPosition(playerView.tipPosition.position, playerView.tipPosition.rotation);
-      
+        
+    }
+
+
+    //Events which will happen on when specified health reaced.
+    public void CheckHealth()
+    {
+       
+        if (PlayerModel.health < 75)
+         {
+            HealthService.Instance.HealthAnims[0].SetBool("health", true);
+            //HealthService.Instance.PlayerHIcons[0].enabled = false;
+         }
+
+        if (PlayerModel.health < 50 && PlayerModel.health > 25)
+         {
+            HealthService.Instance.HealthAnims[1].SetBool("health", true);
+            //HealthService.Instance.PlayerHIcons[1].enabled = false;
+         }
+
+        if (PlayerModel.health < 25 && PlayerModel.health > 0)
+         {
+            HealthService.Instance.HealthAnims[2].SetBool("health", true);
+            //HealthService.Instance.PlayerHIcons[2].enabled = false;
+         }
+        
     }
 
 }

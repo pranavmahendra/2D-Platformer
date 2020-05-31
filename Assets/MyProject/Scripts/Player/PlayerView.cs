@@ -114,7 +114,8 @@ public class PlayerView : MonoBehaviour
         else if(collision.gameObject.layer == LayerMask.NameToLayer("BossBullet"))
         {
             playerController.TakeDamage(EnemyService.Instance.enemyController.EnemyModel.Damage);
-            if(playerController.PlayerModel.health > 0)
+            playerController.CheckHealth();
+            if (playerController.PlayerModel.health > 0)
             {
                 StartCoroutine(SetHurtFalse());
             }
