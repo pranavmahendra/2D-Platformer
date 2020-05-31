@@ -105,12 +105,13 @@ public class PlayerView : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        //Hurt animation play.
         if (collision.gameObject.layer == LayerMask.NameToLayer("EnemyTriggerAttack"))
         {
             animator.SetBool("Hurt", true);
             playerController.isHurt = true;
         }
-
+        //If collided with Boss Bullet.
         else if(collision.gameObject.layer == LayerMask.NameToLayer("BossBullet"))
         {
             playerController.TakeDamage(EnemyService.Instance.enemyController.EnemyModel.Damage);
@@ -119,7 +120,11 @@ public class PlayerView : MonoBehaviour
             {
                 StartCoroutine(SetHurtFalse());
             }
-           
+        }
+        //Player Drop
+        else if(collision.gameObject.layer == LayerMask.NameToLayer("PlayerDrop"))
+        {
+            PlayerService.Instance.InvokeDead();
         }
     }
 

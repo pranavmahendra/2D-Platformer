@@ -173,7 +173,7 @@ public class PlayerController
             playerView.gameObject.SetActive(false);
             HealthService.Instance.HealthAnims[3].SetBool("health", true);
             //HealthService.Instance.PlayerHIcons[3].enabled = false;
-            Debug.Log("Player has died.");
+            PlayerService.Instance.InvokeDead();
         }
         else
         {

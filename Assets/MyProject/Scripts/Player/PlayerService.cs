@@ -14,6 +14,7 @@ public class PlayerService : Monosingleton<PlayerService>
     public event Action EllenRun;
     public event Action EllenAttack;
     public event Action EllenHurt;
+    public event Action EllenDead;
     //public event Action EllenJump;
 
     void Start()
@@ -61,6 +62,11 @@ public class PlayerService : Monosingleton<PlayerService>
     public void invokeHurt()
     {
         EllenHurt?.Invoke();
+    }
+
+    public void InvokeDead()
+    {
+        EllenDead?.Invoke();
     }
 
     //Sounds to be played when various events are called.

@@ -8,6 +8,7 @@ public class AudioService : Monosingleton<AudioService>
     public List<AudioSource> audioSources;
     public List<AudioClip> enemyAudioClips;
     public List<AudioClip> playerAudioClips;
+    public List<AudioClip> backgroundClips;
 
     private EnemyView enemyView;
     private PlayerView playerView;
