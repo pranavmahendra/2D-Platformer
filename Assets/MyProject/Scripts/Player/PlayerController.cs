@@ -27,18 +27,19 @@ public class PlayerController
     public bool isHurt;
 
     private bool m_FacingRight = true;
+    public bool isRunning;
 
     public float speed;
 
     //Player Run Logic
     public void playerRun()
     {
-
+       
         speed = Input.GetAxisRaw("Horizontal");
 
         playerView.animator.SetFloat("Speed", Mathf.Abs(speed));
 
-        PlayerService.Instance.invokeRun();
+     
         //Flip the character.
         //Speed more than 0 and facing left.
         if (speed > 0 && !m_FacingRight)
@@ -56,7 +57,7 @@ public class PlayerController
             isMoving = false;
         }
 
-
+     
         void Flip()
         {
             m_FacingRight = !m_FacingRight;
@@ -135,9 +136,7 @@ public class PlayerController
 
             //Playing audio logic
             PlayerService.Instance.invokeAttack();
-            //PlayerService.Instance.audioService.audioSources[1].clip = PlayerService.Instance.audioService.playerAudioClips[1];
-            //PlayerService.Instance.audioService.audioSources[1].Play();
-            //PlayerService.Instance.audioService.audioSources[1].loop = false;
+      
         }
         else if (Input.GetKeyUp(KeyCode.Mouse0))
         {

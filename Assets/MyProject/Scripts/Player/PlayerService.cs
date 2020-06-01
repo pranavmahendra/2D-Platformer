@@ -15,13 +15,12 @@ public class PlayerService : Monosingleton<PlayerService>
     public event Action EllenAttack;
     public event Action EllenHurt;
     public event Action EllenDead;
-    //public event Action EllenJump;
+    public event Action EllenLand;
+    
 
     void Start()
     {
         CreatePlayer();
-
-        EllenSound();
 
         BulletService.Instance.InitializePlayerView(this.playerController.playerView);
 
@@ -44,6 +43,8 @@ public class PlayerService : Monosingleton<PlayerService>
         this.playerController = playerController;
 
         HealthService.Instance.followPlayer();
+
+        RunningSound();
 
         return playerController;       
     }
@@ -69,13 +70,28 @@ public class PlayerService : Monosingleton<PlayerService>
         EllenDead?.Invoke();
     }
 
-    //Sounds to be played when various events are called.
-    //Run sound
-    public void EllenSound()
+    public void InvokeLand()
     {
-        audioService.audioSources[1].clip = audioService.playerAudioClips[0];
-        audioService.audioSources[1].Play();
-        audioService.audioSources[1].loop = true;
+        EllenLand?.Invoke();
     }
 
+    //Sounds to be played when various events are called.
+    //Run sound
+    public void RunningSound()
+    {
+     
+            audioService.audioSources[1].clip = audioService.playerAudioClips[0];
+            audioService.audioSources[1].Play();
+            audioService.audioSources[1].loop = true;
+        
+
+    }
+
+    //landing sound
+    public void LandingSound()
+    {
+        audioService.audioSources[1].clip = audioService.playerAudioClips[4];
+        audioService.audioSources[1].Play();
+        audioService.audioSources[1].loop = false;
+    }
 }

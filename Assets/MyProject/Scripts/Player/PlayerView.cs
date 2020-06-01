@@ -28,6 +28,9 @@ public class PlayerView : MonoBehaviour
 
     [HideInInspector]
     public bool isGrounded;
+
+    [HideInInspector]
+    public bool alreadyPlayed = true;
     
 
     private void Start()
@@ -80,9 +83,11 @@ public class PlayerView : MonoBehaviour
             playerController.isJumping = false;
 
             //Play landing audio
-            PlayerService.Instance.audioService.audioSources[1].clip = PlayerService.Instance.audioService.playerAudioClips[4];
-            PlayerService.Instance.audioService.audioSources[1].Play();
-            PlayerService.Instance.audioService.audioSources[1].loop = false;
+            if (!alreadyPlayed && isGrounded == true)
+            {
+                PlayerService.Instance.InvokeLand();
+                alreadyPlayed = true;
+            }
         }
 
     }
@@ -97,7 +102,7 @@ public class PlayerView : MonoBehaviour
         else if (collision.gameObject.layer == LayerMask.NameToLayer("Platform"))
         {
             isGrounded = false;
-            
+            alreadyPlayed = false;
             dustPuff.Stop();
         }
 
@@ -126,6 +131,8 @@ public class PlayerView : MonoBehaviour
         {
             PlayerService.Instance.InvokeDead();
         }
+
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
