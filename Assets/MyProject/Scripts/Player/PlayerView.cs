@@ -13,6 +13,8 @@ public class PlayerView : MonoBehaviour
     [HideInInspector]
     public CapsuleCollider2D capsule;
 
+
+
     public float jumpForce;
     public int speed;
 
@@ -39,7 +41,7 @@ public class PlayerView : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
         audioSource = GetComponent<AudioSource>();
         capsule = GetComponent<CapsuleCollider2D>();
-       
+
     }
 
     public float getHealh()

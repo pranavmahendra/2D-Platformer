@@ -9,7 +9,6 @@ public class LevelService : Monosingleton<LevelService>
 {
     public GameObject GameOverCanvas;
 
-
     private int Currentindex;
 
     public List<Button> GameOverButtons;

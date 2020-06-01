@@ -44,7 +44,8 @@ public class PlayerService : Monosingleton<PlayerService>
 
         HealthService.Instance.followPlayer();
 
-        RunningSound();
+        //RunningSound();
+        CamerFollow.Instance.followPlayer();
 
         return playerController;       
     }
