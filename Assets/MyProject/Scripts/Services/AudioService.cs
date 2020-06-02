@@ -36,9 +36,10 @@ public class AudioService : Monosingleton<AudioService>
 
     private void playAttackingSound()
     {
-        audioSources[1].clip = playerAudioClips[1];
-        audioSources[1].Play();
-        audioSources[1].loop = false;
+        //audioSources[1].clip = playerAudioClips[1];
+        //audioSources[1].Play();
+        //audioSources[1].loop = false;
+        audioSources[1].PlayOneShot(playerAudioClips[1]);
     }
 
     public void InitializeEnemy(EnemyView enemyView)
@@ -51,13 +52,14 @@ public class AudioService : Monosingleton<AudioService>
         this.playerView = playerView;
     }
 
-
+    //Play menu sound when player died.
     private void playAmbientDeadSound()
     {
         audioSources[2].clip = backgroundClips[1];
         audioSources[2].Play();
     }
 
+    //Play sound when player lands on ground.
     private void playLandingSound()
     {
         audioSources[1].clip = playerAudioClips[4];

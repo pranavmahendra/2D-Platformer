@@ -29,7 +29,7 @@ public class PlayerView : MonoBehaviour
     public ParticleSystem dustPuff;
 
     [HideInInspector]
-    public bool isGrounded;
+    public bool isGrounded = true;
 
     [HideInInspector]
     public bool alreadyPlayed = true;
@@ -84,12 +84,21 @@ public class PlayerView : MonoBehaviour
 
             playerController.isJumping = false;
 
-            //Play landing audio
-            if (!alreadyPlayed && isGrounded == true)
+            if(isGrounded)
             {
-                PlayerService.Instance.InvokeLand();
-                alreadyPlayed = true;
+                if (playerController.isMoving())
+                {
+                    PlayerService.Instance.audioService.audioSources[1].clip = PlayerService.Instance.audioService.playerAudioClips[0];
+                    PlayerService.Instance.audioService.audioSources[1].Play();
+                    PlayerService.Instance.audioService.audioSources[1].loop = true;
+                }
+                else if (playerController.isMoving() == false)
+                {
+                    PlayerService.Instance.InvokeLand();
+                }
+             
             }
+            
         }
 
     }

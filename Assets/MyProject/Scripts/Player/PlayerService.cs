@@ -28,12 +28,7 @@ public class PlayerService : Monosingleton<PlayerService>
         
     }
 
-    private void Update()
-    {
-        
-    }
-
-
+    //Creating Player.
     public PlayerController CreatePlayer()
     {
         PlayerModel playerModel = new PlayerModel(100);
@@ -49,6 +44,7 @@ public class PlayerService : Monosingleton<PlayerService>
 
         return playerController;       
     }
+
 
     //Methods to invoke
     public void invokeRun()
@@ -81,10 +77,9 @@ public class PlayerService : Monosingleton<PlayerService>
     public void RunningSound()
     {
      
-            audioService.audioSources[1].clip = audioService.playerAudioClips[0];
-            audioService.audioSources[1].Play();
-            audioService.audioSources[1].loop = true;
-        
+        audioService.audioSources[1].clip = audioService.playerAudioClips[0];
+        audioService.audioSources[1].Play();
+        audioService.audioSources[1].loop = true;
 
     }
 

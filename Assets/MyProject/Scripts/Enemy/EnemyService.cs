@@ -35,7 +35,7 @@ public class EnemyService : Monosingleton<EnemyService>
 
     public EnemyController CreateEnemy()
     {
-        enemyModel = new EnemyModel(100,10);
+        enemyModel = new EnemyModel(100,20);
         EnemyController enemyController = new EnemyController(enemyModel, enemyView);
 
         //Add enemy to list

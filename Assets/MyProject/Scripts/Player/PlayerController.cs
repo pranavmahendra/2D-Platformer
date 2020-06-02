@@ -21,7 +21,7 @@ public class PlayerController
     
 
     public bool isJumping;
-    public bool isMoving;
+    //public bool isMoving;
     public bool isCrouching;
     public bool isAttacking;
     public bool isHurt;
@@ -30,6 +30,18 @@ public class PlayerController
     public bool isRunning;
 
     public float speed;
+
+    public bool isMoving()
+    {
+        if(speed == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 
     //Player Run Logic
     public void playerRun()
@@ -44,18 +56,15 @@ public class PlayerController
         //Speed more than 0 and facing left.
         if (speed > 0 && !m_FacingRight)
         {
-            isMoving = true;
+            //isMoving = true;
             Flip();
         }
         else if (speed < 0 && m_FacingRight)
         {
-            isMoving = true;
+            //isMoving = true;
             Flip();
         }
-        else
-        {
-            isMoving = false;
-        }
+
 
      
         void Flip()
@@ -169,7 +178,11 @@ public class PlayerController
         PlayerModel.health = PlayerModel.health - projectileDamage;
         if (PlayerModel.health <= 0)
         {
-            playerView.gameObject.SetActive(false);
+            //Game object setting off.
+      
+            //Play death animation.
+            playerView.animator.SetBool("isDead", true);
+            //Play heart reduce animation.
             HealthService.Instance.HealthAnims[3].SetBool("health", true);
             //HealthService.Instance.PlayerHIcons[3].enabled = false;
             PlayerService.Instance.InvokeDead();
@@ -216,5 +229,9 @@ public class PlayerController
         
     }
 
+    public void PlayerDead()
+    {
+        playerView.gameObject.SetActive(false);
+    }
 }
 

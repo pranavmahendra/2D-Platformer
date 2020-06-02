@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class HealthService : Monosingleton<HealthService>
 {
     public PlayerView playerView;
+    //Hearts at the top
     public List<Animator>  HealthAnims;
 
     
