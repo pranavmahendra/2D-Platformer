@@ -25,6 +25,7 @@ public class AcidPool : MonoBehaviour
             audioSource.Play();
             //activate game over canvas from here.
             gameOver.gameObject.SetActive(true);
+
         }
     }
 }

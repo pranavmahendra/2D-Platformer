@@ -23,7 +23,7 @@ public class PressurePad : MonoBehaviour
     [HideInInspector]
     public bool isActivated = false;
 
-    //Audio Source
+    //Audio Source for pad.
     private AudioSource audioSource;
 
    
@@ -46,6 +46,7 @@ public class PressurePad : MonoBehaviour
             isActivated = true;
 
             spr.sprite = padSprites[1];
+
             audioSource.Play();
 
             HubLightsOn();

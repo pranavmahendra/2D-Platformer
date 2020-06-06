@@ -45,6 +45,8 @@ namespace Player
             audioSource = GetComponent<AudioSource>();
             capsule = GetComponent<CapsuleCollider2D>();
 
+            VFXService.Instance.CreateRespawn(this.transform.position, this.transform.rotation);
+
         }
 
         public float getHealh()
@@ -135,11 +137,13 @@ namespace Player
                 animator.SetBool("Hurt", true);
                 playerController.isHurt = true;
             }
-            //If collided with Boss Bullet.
+            //If collided with Enemy Bullet.
             else if (collision.gameObject.layer == LayerMask.NameToLayer("BossBullet"))
             {
                 playerController.TakeDamage(EnemyService.Instance.enemyController.EnemyModel.Damage);
+                //For UI hearts.
                 playerController.CheckHealth();
+
                 if (playerController.PlayerModel.health > 0)
                 {
                     StartCoroutine(SetHurtFalse());

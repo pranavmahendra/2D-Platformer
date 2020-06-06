@@ -30,4 +30,10 @@ public class VFXService : Monosingleton<VFXService>
         particles[3].Play();
     }
 
+    public void EllenHurt(Vector3 spawnPos, Quaternion rot)
+    {
+        Instantiate(particles[4], spawnPos, rot);
+        particles[4].Play();
+    }
+
 }

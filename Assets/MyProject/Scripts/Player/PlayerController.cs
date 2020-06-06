@@ -165,6 +165,8 @@ namespace Player
             PlayerService.Instance.invokeHurt();
             //isHurt = true;
             playerView.animator.SetBool("Hurt", true);
+            //Play Hurt VFX
+            //VFXService.Instance.EllenHurt(this.playerView.transform.position, this.playerView.transform.rotation);
 
         }
 
