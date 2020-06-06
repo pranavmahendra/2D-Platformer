@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Enemy;
+using Player;
 
 public class AudioService : Monosingleton<AudioService>
 {
@@ -26,6 +28,7 @@ public class AudioService : Monosingleton<AudioService>
         PlayerService.Instance.EllenRun += playRunningSound;
 
     }
+
 
     private void playRunningSound()
     {

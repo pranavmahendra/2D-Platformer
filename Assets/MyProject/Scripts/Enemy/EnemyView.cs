@@ -2,105 +2,110 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Player;
 
-public class EnemyView : MonoBehaviour
+namespace Enemy
 {
-    public int speed;
-
-    public Animator animator;
-    public EnemyController enemyController;
-
-    public GameObject projectile;
-
-    public Transform Tip;
-    //private float rayDistance = 100f;
-
-
-    [SerializeField]
-    public EnemyState currentState;
-
-    [SerializeField]
-    public EnemyIdleState EnemyIdleState;
-    [SerializeField]
-    public EnemyStop enemyStop;
-    [SerializeField]
-    public EnemyAttack enemyAttack;
-
-    private float fireRate;
-    private float nextFire;
-
-
-    // Start is called before the first frame update
-    void Start()
+    public class EnemyView : MonoBehaviour
     {
-     
-        animator = GetComponent<Animator>();
+        public int speed;
 
-        speed = 1;
+        public Animator animator;
+        public EnemyController enemyController;
 
-        fireRate = 2f;
-        nextFire = Time.time;
+        public GameObject projectile;
 
-        ChangeState(EnemyIdleState);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-        enemyController.Movement();
-
-        CheckToFire();
+        public Transform Tip;
+        //private float rayDistance = 100f;
 
 
+        [SerializeField]
+        public EnemyState currentState;
 
-    }
+        [SerializeField]
+        public EnemyIdleState EnemyIdleState;
+        [SerializeField]
+        public EnemyStop enemyStop;
+        [SerializeField]
+        public EnemyAttack enemyAttack;
 
-    //Initialize Enemy View
-    public void Initialize(EnemyController enemyController)
-    {
-        this.enemyController = enemyController;
-    }
+        private float fireRate;
+        private float nextFire;
 
-    // On Trigger
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if(collision.gameObject.layer == LayerMask.NameToLayer("Triggers"))
+
+        // Start is called before the first frame update
+        void Start()
         {
-            if (speed == 1)
+
+            animator = GetComponent<Animator>();
+
+            speed = 1;
+
+            fireRate = 2f;
+            nextFire = Time.time;
+
+            ChangeState(EnemyIdleState);
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+
+            enemyController.Movement();
+
+            CheckToFire();
+
+
+
+        }
+
+        //Initialize Enemy View
+        public void Initialize(EnemyController enemyController)
+        {
+            this.enemyController = enemyController;
+        }
+
+        // On Trigger
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.layer == LayerMask.NameToLayer("Triggers"))
             {
-                speed = -1;
+                if (speed == 1)
+                {
+                    speed = -1;
+                }
+                else if (speed == -1)
+                {
+                    speed = 1;
+                }
             }
-            else if (speed == -1)
+
+        }
+
+        //State Machine logic.
+        public void ChangeState(EnemyState newState)
+        {
+            if (currentState != null)
             {
-                speed = 1;
+                currentState.onExitState();
+            }
+            currentState = newState;
+            currentState.onEnterState();
+        }
+
+
+        //Fire
+        public void CheckToFire()
+        {
+            if (Time.time > nextFire && PlayerService.Instance.playerController.PlayerModel.health > 0)
+            {
+                Instantiate(projectile, Tip.transform.position, Tip.transform.rotation);
+                nextFire = Time.time + fireRate;
             }
         }
-   
+
+
+
     }
-
-    //State Machine logic.
-    public void ChangeState(EnemyState newState)
-    {
-        if (currentState != null)
-        {
-            currentState.onExitState();
-        }
-        currentState = newState;
-        currentState.onEnterState();
-    }
-
-
-    //Fire
-    public void CheckToFire()
-    {
-        if (Time.time > nextFire)
-        {
-            Instantiate(projectile, Tip.transform.position, Tip.transform.rotation);
-            nextFire = Time.time + fireRate;
-        }
-    }
-
-
-
 }
+

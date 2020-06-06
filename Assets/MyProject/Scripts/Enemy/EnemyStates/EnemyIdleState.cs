@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState : EnemyState
+namespace Enemy
 {
-    public override void onEnterState()
+    public class EnemyIdleState : EnemyState
     {
-        base.onEnterState();
+        public override void onEnterState()
+        {
+            base.onEnterState();
 
-        //Debug.Log("Entered Idle state");
+            //Debug.Log("Entered Idle state");
+        }
+
+        public override void onExitState()
+        {
+            base.onExitState();
+
+
+        }
     }
-
-    public override void onExitState()
-    {
-        base.onExitState();
-
-    
-    }
-
-
-
 }
+

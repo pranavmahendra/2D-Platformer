@@ -24,6 +24,10 @@ public class VFXService : Monosingleton<VFXService>
         particles[2].Play();
     }
 
-
+    public void CreateRespawn(Vector3 spawnPos, Quaternion rotation)
+    {
+        Instantiate(particles[3], spawnPos, rotation);
+        particles[3].Play();
+    }
 
 }

@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
 
-public class EnemyModel
+namespace Enemy
 {
-   public EnemyModel(int Health, int damage)
+    public class EnemyModel
     {
-        this.Health = Health;
-        this.Damage = damage;
+        public EnemyModel(int Health, int damage)
+        {
+            this.Health = Health;
+            this.Damage = damage;
+        }
+
+        public int Health { get; set; }
+        public int Damage { get; }
     }
 
-    public int Health { get; set; }
-    public int Damage { get; }
 }

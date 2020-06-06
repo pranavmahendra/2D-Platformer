@@ -32,10 +32,6 @@ public class MainMenuLevel : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        
-    }
 
     public void StartGame()
     {

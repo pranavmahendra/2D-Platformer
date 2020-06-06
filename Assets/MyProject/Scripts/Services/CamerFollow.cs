@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
+using Player;
 
 public class CamerFollow : Monosingleton<CamerFollow>
 {

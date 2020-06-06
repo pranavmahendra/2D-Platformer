@@ -1,52 +1,57 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Player;
 
-public class EnemyStop : EnemyState
+namespace Enemy
 {
-    private Transform PlayerPos;
-
-    public override void onEnterState()
+    public class EnemyStop : EnemyState
     {
-        base.onEnterState();
-        enemyView.speed = 0;
+        private Transform PlayerPos;
 
-
-        EnemyService.Instance.audioService.audioSources[0].clip = EnemyService.Instance.audioService.enemyAudioClips[1];
-        EnemyService.Instance.audioService.audioSources[0].Play();
-        EnemyService.Instance.audioService.audioSources[0].loop = false;
-        //Debug.Log("Enemy has stopped!!!");
-    }
-
-    public override void onExitState()
-    {
-        base.onExitState();
-        enemyView.speed = 1;
-
-        EnemyService.Instance.PlayAudio();
-    }
-
-    private void Update()
-    {
-        //enemyView.CheckToFire();
-    }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.GetComponent<PlayerView>() != null)
+        public override void onEnterState()
         {
-            
-            enemyView.ChangeState(enemyView.enemyStop);
-        }
-    }
+            base.onEnterState();
+            enemyView.speed = 0;
 
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if(collision.gameObject.GetComponent<PlayerView>() != null)
+
+            EnemyService.Instance.audioService.audioSources[0].clip = EnemyService.Instance.audioService.enemyAudioClips[1];
+            EnemyService.Instance.audioService.audioSources[0].Play();
+            EnemyService.Instance.audioService.audioSources[0].loop = false;
+            //Debug.Log("Enemy has stopped!!!");
+        }
+
+        public override void onExitState()
         {
-            enemyView.ChangeState(enemyView.EnemyIdleState);
-        }
-    }
+            base.onExitState();
+            enemyView.speed = 1;
 
+            EnemyService.Instance.PlayAudio();
+        }
+
+        private void Update()
+        {
+            //enemyView.CheckToFire();
+        }
+
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.gameObject.GetComponent<PlayerView>() != null)
+            {
+
+                enemyView.ChangeState(enemyView.enemyStop);
+            }
+        }
+
+        private void OnTriggerExit2D(Collider2D collision)
+        {
+            if (collision.gameObject.GetComponent<PlayerView>() != null)
+            {
+                enemyView.ChangeState(enemyView.EnemyIdleState);
+            }
+        }
+
+    }
 }
+
